@@ -1,7 +1,6 @@
 
 import { put, call, take } from 'redux-saga/effects';
 
-import WebsocketMessage from '../../../WebsocketMessage/WebsocketMessage';
 import { events } from '../constants';
 import socketEventChannel from './socketEventChannel';
 
@@ -18,7 +17,7 @@ function* receive(api) {
         break;
 
       case events.MESSAGE: {
-        const message = new WebsocketMessage(data);
+        const message = api.createMessage(data);
 
         if (!message.isPing) {
           yield put(api.receive(message));
