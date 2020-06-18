@@ -1,0 +1,54 @@
+{
+  "extends": "airbnb",
+  "plugins": [
+    "jest",
+    "react-hooks",
+  ],
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "jest/globals": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["./src"]
+      }
+    }
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+    "react/jsx-indent-props": [1, 2],
+    "react/jsx-closing-bracket-location": ["error", { "selfClosing": false }],
+    "react/jsx-one-expression-per-line": 0,
+    "react/forbid-prop-types": 0,
+    "semi": ["error", "always"],
+    "quote-props": ["error", "as-needed"],
+    "arrow-parens": ["error", "as-needed"],
+    "padded-blocks": ["error", { "classes": "always" }],
+    "function-paren-newline": "off",
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/valid-expect": "error",
+    "object-curly-newline": ["error", { "consistent": true, "multiline": true }],
+    "no-underscore-dangle": ["error", {
+      "allow": [
+        "_id",
+        "_error"
+      ]
+    }],
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": [
+        "src/setupTests.js",
+        "**/__tests__/**",
+        "**/__mocks__/**"
+      ],
+      "optionalDependencies": false
+    }],
+    "import/no-cycle": 0,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+  }
+}
