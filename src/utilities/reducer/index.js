@@ -6,7 +6,7 @@ import { reducer as queryReducer } from '../../query';
 import { reducer as resolutionReducer } from '../../resolution';
 import updateLock from './updateLock';
 
-const data = (state = {}, action) => {
+const arwen = (state = {}, action) => {
   const { api, instance, lock: initialLock = {}, model, query, resolution } = state;
   const { lock, resolutionsToUpdate } = updateLock(initialLock, action);
 
@@ -21,5 +21,5 @@ const data = (state = {}, action) => {
 };
 
 export default {
-  data,
+  arwen,
 };

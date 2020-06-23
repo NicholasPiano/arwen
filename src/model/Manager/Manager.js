@@ -13,20 +13,16 @@ class Manager {
   }
 
   useQuery(parameters, blocked = false) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const dispatch = useDispatch();
     const { query, queryId } = createManagerQuery(
       parameters,
       this.model,
       blocked,
     );
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const selector = useSelector(selectors.resolutionSelector);
     const resolution = selector(queryId);
     const register = isRegisterable(query, resolution);
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (register) {
         dispatch(actions.registerQuery(query));

@@ -14,7 +14,7 @@ class API {
   }
 
   static prepareModels(...models) {
-    return models.reduce((acc, modelClass) => {
+    this.models = models.reduce((acc, modelClass) => {
       /* eslint-disable-next-line no-param-reassign */
       modelClass.api = this.id;
 
@@ -25,9 +25,9 @@ class API {
     }, {});
   }
 
-  static exportModels() {
-    return Object.keys(this.models).reduce((acc, modelId) => {
-      const modelClass = this.models[modelId];
+  exportModels() {
+    return Object.keys(this.constructor.models).reduce((acc, modelId) => {
+      const modelClass = this.constructor.models[modelId];
 
       return {
         [modelClass.name]: modelClass,

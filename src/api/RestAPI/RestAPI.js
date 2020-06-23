@@ -8,8 +8,13 @@ class RestAPI extends API {
     this.socket = new RestSocket(this.url);
   }
 
+  send(data) {
+    return this.socket.send(data).then(this.socket.onmessage).catch(this.socket.onerror);
+  }
+
 }
 
 RestAPI.Message = RestMessage;
+RestAPI.models = RestAPI.prepareModels();
 
 export default RestAPI;

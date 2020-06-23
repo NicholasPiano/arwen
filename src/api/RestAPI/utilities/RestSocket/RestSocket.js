@@ -11,8 +11,8 @@ class RestSocket extends BaseSocket {
     return this;
   }
 
-  send() {
-    return this;
+  send(data) {
+    return fetch(data);
   }
 
 }
