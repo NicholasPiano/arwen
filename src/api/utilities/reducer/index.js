@@ -1,6 +1,6 @@
 
 import { actionTypes } from '../../constants';
-import openWebsocket from './openWebsocket';
+import openApi from './openApi';
 
 const initialState = {
 
@@ -9,7 +9,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.OPEN:
-      return openWebsocket(state, action);
+      return openApi(state, action);
 
     default:
       return state;

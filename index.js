@@ -1,5 +1,5 @@
 
-import { API, RestAPI } from './src/api';
+import { API, RestAPI, sagas as apiSagas } from './src/api';
 import { Model, Manager } from './src/model';
 import { reducer } from './src/utilities';
 
@@ -9,4 +9,5 @@ export {
   Model,
   Manager,
   reducer,
+  apiSagas,
 };

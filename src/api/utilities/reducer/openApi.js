@@ -1,5 +1,5 @@
 
-const openWebsocket = (state, action) => {
+const openApi = (state, action) => {
   const { api, url } = action.payload;
 
   return {
@@ -15,4 +15,4 @@ const openWebsocket = (state, action) => {
   };
 };
 
-export default openWebsocket;
+export default openApi;
