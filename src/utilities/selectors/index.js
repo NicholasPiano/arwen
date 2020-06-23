@@ -1,6 +1,6 @@
 
-import dataSelector from './dataSelector';
+import arwenSelector from './arwenSelector';
 
 export default {
-  dataSelector,
+  arwenSelector,
 };
