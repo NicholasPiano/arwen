@@ -1,10 +1,21 @@
 
-import { API, RestAPI, RestSocket, RestMessage, WebsocketAPI, sagas as apiSagas } from './src/api';
+import {
+  API,
+  LocalStorage,
+  localStorageAPI,
+  RestAPI,
+  RestSocket,
+  RestMessage,
+  WebsocketAPI,
+  sagas as apiSagas,
+} from './src/api';
 import { Model, Manager } from './src/model';
-import { reducer } from './src/utilities';
+import { reducer, hooks } from './src/utilities';
 
 export {
   API,
+  LocalStorage,
+  localStorageAPI,
   RestAPI,
   RestSocket,
   RestMessage,
@@ -13,4 +24,5 @@ export {
   Model,
   Manager,
   reducer,
+  hooks,
 };

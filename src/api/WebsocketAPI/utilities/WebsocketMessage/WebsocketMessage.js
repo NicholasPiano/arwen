@@ -1,16 +1,7 @@
 
-class WebsocketMessage {
+import { BaseMessage } from '../../../API/utilities';
 
-  constructor(rawData) {
-    const [type, response] = JSON.parse(rawData);
-    const { callId: id, method, result, error } = JSON.parse(response);
-
-    this.type = type;
-    this.id = id;
-    this.method = method;
-    this.result = result;
-    this.error = error;
-  }
+class WebsocketMessage extends BaseMessage {
 
   get isPing() {
     return this.type === 'PING';

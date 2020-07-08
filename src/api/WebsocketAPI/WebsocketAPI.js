@@ -4,7 +4,7 @@ import { WebsocketMessage } from './utilities';
 
 class WebsocketAPI extends API {
 
-  start({ url } = {}) {
+  createSocket({ url } = {}) {
     const websocketURL = url || this.constructor.url;
 
     this.socket = new WebSocket(websocketURL);

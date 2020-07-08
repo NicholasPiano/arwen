@@ -6,6 +6,7 @@ import actions from '../actions';
 
 function* updateQuery(api, action) {
   const { query, ...rest } = action.payload;
+
   const { model } = (yield select(selectors.querySelector))(query);
 
   yield put(actions.updateQuery({ query, ...rest, model }));

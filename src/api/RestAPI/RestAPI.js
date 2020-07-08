@@ -4,7 +4,7 @@ import { RestMessage, RestSocket } from './utilities';
 
 class RestAPI extends API {
 
-  start() {
+  createSocket() {
     this.socket = new RestSocket(this.url);
   }
 

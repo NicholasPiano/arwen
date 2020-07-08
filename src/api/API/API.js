@@ -39,12 +39,12 @@ class API {
     return this.constructor.id;
   }
 
-  start() {
+  createSocket() {
     this.socket = new BaseSocket(this.url);
   }
 
   send(data) {
-    return this.socket.send(JSON.stringify(data));
+    return this.socket.send(data);
   }
 
   createMessage(data) {
@@ -57,6 +57,10 @@ class API {
     }
 
     return action.payload.api === this.constructor.id;
+  }
+
+  get startActionType() {
+    return action => this.matchesId(action) && action.type === actionTypes.START;
   }
 
   get openActionType() {
@@ -73,6 +77,14 @@ class API {
 
   get closeActionType() {
     return action => this.matchesId(action) && action.type === actionTypes.CLOSE;
+  }
+
+  get errorActionType() {
+    return action => this.matchesId(action) && action.type === actionTypes.ERROR;
+  }
+
+  get stopActionType() {
+    return action => this.matchesId(action) && action.type === actionTypes.STOP;
   }
 
   baseAction(type, data) {
@@ -94,6 +106,15 @@ class API {
     );
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  shouldStart() {
+    return true;
+  }
+
+  start(parameters) {
+    return this.baseAction(actionTypes.START, parameters);
+  }
+
   receive(message) {
     return this.baseAction(actionTypes.RECEIVE, { ...message });
   }
@@ -104,6 +125,10 @@ class API {
 
   close(data) {
     return this.baseAction(actionTypes.CLOSE, { ...data });
+  }
+
+  stop(parameters) {
+    return this.baseAction(actionTypes.STOP, parameters);
   }
 
 }

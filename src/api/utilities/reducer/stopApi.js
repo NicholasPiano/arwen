@@ -1,5 +1,5 @@
 
-const openApi = (state, action) => {
+const stopApi = (state, action) => {
   const { api } = action.payload;
   const { [api]: { attributes } } = state;
 
@@ -9,10 +9,10 @@ const openApi = (state, action) => {
       id: api,
       attributes: {
         ...attributes,
-        open: true,
+        running: false,
       },
     },
   };
 };
 
-export default openApi;
+export default stopApi;
