@@ -19,6 +19,7 @@ class RestSocket extends BaseSocket {
     return this;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   send(data) {
     return fetch(data);
   }

@@ -19,8 +19,7 @@ class Manager {
       this.model,
       blocked,
     );
-    const selector = useSelector(selectors.resolutionSelector);
-    const resolution = selector(queryId);
+    const resolution = useSelector(selectors.resolutionSelector)(queryId);
     const register = isRegisterable(query, resolution);
 
     useEffect(() => {

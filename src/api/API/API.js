@@ -52,6 +52,10 @@ class API {
   }
 
   matchesId(action) {
+    if (!action.payload) {
+      return false;
+    }
+
     return action.payload.api === this.constructor.id;
   }
 
