@@ -19,7 +19,7 @@ function* receive(api) {
       case events.MESSAGE: {
         const message = api.createMessage(data);
 
-        if (!message.isPing) {
+        if (!message.shouldIgnore) {
           yield put(api.receive(message));
         }
 

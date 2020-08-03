@@ -9,7 +9,11 @@ const useDeepCompareMemoize = value => {
     ref.current = value;
   }
 
-  return [ref.current];
+  if (ref.current) {
+    return [ref.current];
+  }
+
+  return [];
 };
 
 export default useDeepCompareMemoize;

@@ -3,7 +3,7 @@ import API from './API/API';
 import { LocalStorage, localStorageAPI } from './LocalStorageAPI';
 import { RestAPI, RestSocket, RestMessage } from './RestAPI';
 import { sagas, reducer } from './utilities';
-import WebsocketAPI from './WebsocketAPI/WebsocketAPI';
+import { WebsocketAPI, WebsocketMessage } from './WebsocketAPI';
 
 export {
   API,
@@ -15,4 +15,5 @@ export {
   sagas,
   reducer,
   WebsocketAPI,
+  WebsocketMessage,
 };

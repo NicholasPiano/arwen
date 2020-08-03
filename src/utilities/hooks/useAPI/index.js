@@ -6,6 +6,7 @@ import useDeepCompareMemoize from './useDeepCompareMemoize';
 
 const useAPI = (api, parameters) => {
   const dispatch = useDispatch();
+  const dependencies = useDeepCompareMemoize(parameters);
 
   useEffect(() => {
     if (api.shouldStart(parameters)) {
@@ -16,7 +17,7 @@ const useAPI = (api, parameters) => {
 
     return () => null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, useDeepCompareMemoize(parameters));
+  }, dependencies);
 
   return null;
 };
