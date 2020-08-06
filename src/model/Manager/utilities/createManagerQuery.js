@@ -8,7 +8,7 @@ const createManagerQuery = (parameters, model, blocked) => {
 
   const parametersWithModelAndAPI = {
     ...parameters,
-    api: model.api,
+    api: model.api.id,
     model: model.id,
     modelName: model.name,
   };

@@ -1,20 +1,22 @@
 
 import { put, call, take } from 'redux-saga/effects';
 
-import { events } from '../constants';
+import createEvents from './createEvents';
 import socketEventChannel from './socketEventChannel';
 
 function* receive(api) {
-  const channel = yield call(socketEventChannel, api.socket);
+  const events = createEvents(api);
+  const channel = yield call(socketEventChannel, api);
 
   while (true) {
     const { type, data } = yield take(channel);
 
     switch (type) {
-      case events.OPEN:
+      case events.OPEN: {
         yield put(api.open());
 
         break;
+      }
 
       case events.MESSAGE: {
         const message = api.createMessage(data);

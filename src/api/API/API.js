@@ -16,7 +16,7 @@ class API {
   static prepareModels(...models) {
     this.models = models.reduce((acc, modelClass) => {
       /* eslint-disable-next-line no-param-reassign */
-      modelClass.api = this.id;
+      modelClass.api = this;
 
       return {
         ...acc,
@@ -30,6 +30,7 @@ class API {
       const modelClass = this.constructor.models[modelId];
 
       return {
+        ...acc,
         [modelClass.name]: modelClass,
       };
     }, {});
@@ -45,6 +46,14 @@ class API {
 
   send(data) {
     return this.socket.send(data);
+  }
+
+  register(data) {
+    return this.send(data);
+  }
+
+  unregister(data) {
+    return this.send(data);
   }
 
   createMessage(data) {

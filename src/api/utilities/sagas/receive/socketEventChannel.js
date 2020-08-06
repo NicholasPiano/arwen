@@ -1,30 +1,32 @@
 
 import { eventChannel, buffers } from 'redux-saga';
 
-import { events } from '../constants';
+import createEvents from './createEvents';
 
-const socketEventChannel = socket => eventChannel(
+const socketEventChannel = api => eventChannel(
   emit => {
+    const events = createEvents(api);
+
     /* eslint-disable no-param-reassign */
-    socket.onopen = () => {
+    api.socket.onopen = () => {
       emit({ type: events.OPEN });
     };
 
-    socket.onmessage = ({ data }) => {
+    api.socket.onmessage = ({ data }) => {
       emit({ type: events.MESSAGE, data });
     };
 
-    socket.onclose = data => {
+    api.socket.onclose = data => {
       emit({ type: events.CLOSE, data });
     };
 
-    socket.onerror = data => {
+    api.socket.onerror = data => {
       emit({ type: events.ERROR, data });
     };
     /* eslint-enable no-param-reassign */
 
     return () => {
-      socket.close();
+      api.socket.close();
     };
   },
   buffers.expanding(10),

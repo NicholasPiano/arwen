@@ -8,6 +8,7 @@ import {
   RestMessage,
   WebsocketAPI,
   WebsocketMessage,
+  WebsocketManager,
   sagas as apiSagas,
 } from './src/api';
 import { Model, Manager } from './src/model';
@@ -22,6 +23,7 @@ export {
   RestMessage,
   WebsocketAPI,
   WebsocketMessage,
+  WebsocketManager,
   apiSagas,
   Model,
   Manager,

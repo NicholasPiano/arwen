@@ -1,8 +1,9 @@
 
 import WebsocketAPI from './WebsocketAPI';
-import { WebsocketMessage } from './utilities';
+import { WebsocketManager, WebsocketMessage } from './utilities';
 
 export {
   WebsocketAPI,
+  WebsocketManager,
   WebsocketMessage,
 };
