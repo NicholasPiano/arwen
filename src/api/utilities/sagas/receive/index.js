@@ -9,7 +9,7 @@ function* receive(api) {
   const channel = yield call(socketEventChannel, api);
 
   while (true) {
-    const { type, data } = yield take(channel);
+    const { type, data, ...rest } = yield take(channel);
 
     switch (type) {
       case events.OPEN: {
@@ -19,7 +19,7 @@ function* receive(api) {
       }
 
       case events.MESSAGE: {
-        const message = api.createMessage(data);
+        const message = api.createMessage({ data, ...rest });
 
         if (!message.shouldIgnore) {
           yield put(api.receive(message));

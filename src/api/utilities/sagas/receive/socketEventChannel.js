@@ -12,8 +12,8 @@ const socketEventChannel = api => eventChannel(
       emit({ type: events.OPEN });
     };
 
-    api.socket.onmessage = ({ data }) => {
-      emit({ type: events.MESSAGE, data });
+    api.socket.onmessage = response => {
+      emit({ type: events.MESSAGE, ...response });
     };
 
     api.socket.onclose = data => {

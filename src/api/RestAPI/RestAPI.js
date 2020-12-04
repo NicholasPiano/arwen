@@ -8,8 +8,15 @@ class RestAPI extends API {
     this.socket = new RestSocket(this.url);
   }
 
-  send(data) {
-    return this.socket.send(data).then(this.socket.onmessage).catch(this.socket.onerror);
+  async send(data) {
+    try {
+      const { model, query } = data;
+      const response = await this.socket.send(data);
+
+      return this.socket.processResponse({ model, query, response });
+    } catch (error) {
+      return this.socket.processError(error);
+    }
   }
 
 }
