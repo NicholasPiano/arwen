@@ -24,18 +24,13 @@ class Query {
   }
 
   get action() {
-    const { filter, page, size, sort, method } = this.attributes;
     const { model } = this.relationships;
 
     return {
       payload: {
         query: this.id,
-        filter,
-        page,
-        size,
-        sort,
         model,
-        method,
+        ...this.attributes,
       },
     };
   }

@@ -21,6 +21,12 @@ class Resolution {
     return error;
   }
 
+  get data() {
+    const { data } = this.attributes;
+
+    return data;
+  }
+
   get model() {
     return this.relationships.model;
   }

@@ -5,11 +5,10 @@ import createModelId from '../utilities/createModelId';
 
 class Model {
 
-  constructor(instance, dispatchQuery) {
+  constructor(instance) {
     this.id = instance.id;
     this.attributes = instance.attributes;
     this.relationships = instance.relationships;
-    this.dispatchQuery = dispatchQuery;
   }
 
   static get id() {
@@ -20,20 +19,24 @@ class Model {
     return createModelId(this);
   }
 
-  static resolve(resolution, dispatchQuery) {
+  static resolve(resolution, onQuery) {
     if (!resolution) {
-      return {};
+      return { onQuery };
     }
 
-    const { modelInstances, error } = resolution;
+    const { modelInstances, error, data } = resolution;
 
     if (error) {
-      return { error };
+      return { error, onQuery };
     }
 
-    const instances = modelInstances.map(instance => new this(instance, dispatchQuery));
+    if (data) {
+      return { data, onQuery };
+    }
 
-    return { instances };
+    const instances = modelInstances.map(instance => new this(instance));
+
+    return { instances, onQuery };
   }
 
   static generateId(data) {

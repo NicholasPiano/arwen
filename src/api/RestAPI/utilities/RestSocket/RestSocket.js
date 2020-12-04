@@ -29,12 +29,44 @@ class RestSocket extends BaseSocket {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  send(data) {
-    const { method } = data;
+  async send(data) {
+    const { method, body } = data;
     const { endpoint, method: httpMethod } = method;
     const getURL = () => `${this.url}${endpoint}`;
+    const getMethod = () => {
+      if (httpMethod) {
+        return httpMethod;
+      }
 
-    return fetch(getURL(), { method: httpMethod });
+      return 'GET';
+    };
+    const getBody = () => {
+      if (body) {
+        return JSON.stringify(body);
+      }
+
+      return undefined;
+    };
+    const getHeaders = () => {
+      if (body) {
+        return {
+          'Content-Type': 'application/json',
+        };
+      }
+
+      return undefined;
+    };
+
+    const result = await fetch(
+      getURL(),
+      {
+        method: getMethod(),
+        body: getBody(),
+        headers: getHeaders(),
+      },
+    );
+
+    return result;
   }
 
 }
