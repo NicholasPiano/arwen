@@ -3,9 +3,9 @@ import { BaseSocket } from '../../../API/utilities';
 
 class RestSocket extends BaseSocket {
 
-  constructor(url) {
+  constructor(api) {
     super();
-    this.url = url;
+    this.api = api;
 
     setImmediate(() => {
       this.onopen();
@@ -20,8 +20,12 @@ class RestSocket extends BaseSocket {
     return this;
   }
 
-  processResponse(data) {
-    return this.onmessage(data);
+  async processResponse({ response, model: modelId, method, ...rest }) {
+    const data = await response.json();
+    const model = this.api.constructor.models[modelId];
+    const mutatedData = model.receive({ data, method });
+
+    return this.onmessage({ ...mutatedData, model: modelId, ...rest });
   }
 
   processError(error) {
@@ -32,7 +36,7 @@ class RestSocket extends BaseSocket {
   async send(data) {
     const { method, body } = data;
     const { endpoint, method: httpMethod } = method;
-    const getURL = () => `${this.url}${endpoint}`;
+    const getURL = () => `${this.api.constructor.url}${endpoint}`;
     const getMethod = () => {
       if (httpMethod) {
         return httpMethod;

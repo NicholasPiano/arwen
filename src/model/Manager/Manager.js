@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { actions } from '../../query';
@@ -10,6 +10,16 @@ class Manager {
 
   constructor(model) {
     this.model = model;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  useCallback(fn, deps) {
+    return useCallback(fn, deps);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  useState(initial) {
+    return useState(initial);
   }
 
   useQuery({ blocked = false, ...parameters }) {

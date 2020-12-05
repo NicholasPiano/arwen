@@ -7,12 +7,13 @@ const updateInstances = (state, action) => {
   }
 
   return instance.reduce(
-    (acc, { id, ...attributes }) => ({
+    (acc, { id, attributes, relationships }) => ({
       ...acc,
       [id]: {
         id,
         attributes,
         relationships: {
+          ...relationships,
           model,
         },
       },
