@@ -1,11 +1,7 @@
 
 import { createQueryId } from '../../../query';
 
-const createManagerQuery = (parameters, model, blocked) => {
-  if (blocked) {
-    return {};
-  }
-
+const createManagerQuery = (parameters, model) => {
   const parametersWithModelAndAPI = {
     ...parameters,
     api: model.api.id,

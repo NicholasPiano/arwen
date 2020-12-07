@@ -32,7 +32,7 @@ class Manager {
       queryBlocked,
     );
     const resolution = useSelector(selectors.resolutionSelector)(queryId);
-    const register = isRegisterable(query, resolution);
+    const register = isRegisterable(query, resolution, queryBlocked);
     const onQuery = deferredParameters => {
       setQueryBlocked(false);
       setQueryParameters({ ...queryParameters, ...deferredParameters });
