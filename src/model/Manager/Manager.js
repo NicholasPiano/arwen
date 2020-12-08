@@ -1,9 +1,12 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import { actions } from '../../query';
-import { selectors } from '../../resolution';
+import { selectors as resolutionSelectors } from '../../resolution';
+import { selectors as instanceSelectors } from '../../instance';
+import { selectors as modelSelectors } from '../utilities';
 import { createManagerQuery, generateSort, isRegisterable } from './utilities';
 
 class Manager {
@@ -31,7 +34,7 @@ class Manager {
       this.model,
       queryBlocked,
     );
-    const resolution = useSelector(selectors.resolutionSelector)(queryId);
+    const resolution = useSelector(resolutionSelectors.resolutionSelector)(queryId);
     const register = isRegisterable(query, resolution, queryBlocked);
     const onQuery = deferredParameters => {
       setQueryBlocked(false);
@@ -64,6 +67,18 @@ class Manager {
     }
 
     return instances[0];
+  }
+
+  useLocalFirst() {
+    const model = useSelector(modelSelectors.modelSelector)(this.model.id);
+    const instances = useSelector(instanceSelectors.instanceSetSelector)(model);
+
+    if (isEmpty(instances)) {
+      return {};
+    }
+
+    // eslint-disable-next-line new-cap
+    return new this.model(instances[0]);
   }
 
 }

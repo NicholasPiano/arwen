@@ -15,7 +15,7 @@ const resolutionSelector = state => memoize(
     }
 
     const resolution = new Resolution(resolutionPrototype);
-    const instances = instanceSelectors.resolutionInstancesSelector(state)(resolution);
+    const instances = instanceSelectors.instanceSetSelector(state)(resolution);
 
     resolution.setInstances(instances);
 

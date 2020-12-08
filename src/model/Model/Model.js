@@ -51,6 +51,16 @@ class Model {
     return this.attributes.name;
   }
 
+  get instances() {
+    const { instances } = this.relationships;
+
+    if (!instances) {
+      return [];
+    }
+
+    return [...instances];
+  }
+
 }
 
 Model.fields = {};
