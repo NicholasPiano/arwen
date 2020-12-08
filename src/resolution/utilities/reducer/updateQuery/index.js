@@ -19,8 +19,12 @@ const updateQuery = (state, action) => {
 
   const { attributes = {} } = existingResolution;
   const { lock = 0 } = attributes;
-
-  return {
+  const { instances, ...changes } = calculateResolutionInstances({
+    resolution: existingResolution,
+    digest,
+    splice,
+  });
+  const resolution = {
     ...state,
     [query]: {
       id: query,
@@ -33,13 +37,14 @@ const updateQuery = (state, action) => {
       relationships: {
         api,
         model,
-        instances: calculateResolutionInstances({
-          resolution: existingResolution,
-          digest,
-          splice,
-        }),
+        instances,
       },
     },
+  };
+
+  return {
+    resolution,
+    ...changes,
   };
 };
 
