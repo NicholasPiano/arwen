@@ -58,7 +58,7 @@ class Manager {
       }
     }, [blocked]);
 
-    return this.model.resolve(resolution, onQuery);
+    return this.model.resolve({ resolution, onQuery, blocked: queryBlocked });
   }
 
   useFilter({ sort: sortFunction, page, size, ...filter }) {

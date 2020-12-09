@@ -19,24 +19,29 @@ class Model {
     return createModelId(this);
   }
 
-  static resolve(resolution, onQuery) {
+  static resolve({ resolution, onQuery, blocked }) {
+    const common = {
+      loading: !resolution && !blocked,
+      onQuery,
+    };
+
     if (!resolution) {
-      return { onQuery };
+      return common;
     }
 
     const { modelInstances, error, data } = resolution;
 
     if (error) {
-      return { error, onQuery };
+      return { error, ...common };
     }
 
     if (data) {
-      return { data, onQuery };
+      return { data, ...common };
     }
 
     const instances = modelInstances.map(instance => new this(instance));
 
-    return { instances, onQuery };
+    return { instances, ...common };
   }
 
   static generateId(data) {
