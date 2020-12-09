@@ -50,6 +50,14 @@ class Manager {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [queryId]);
 
+    useEffect(() => {
+      setQueryBlocked(blocked);
+
+      if (!blocked) {
+        setQueryParameters(parameters);
+      }
+    }, [blocked]);
+
     return this.model.resolve(resolution, onQuery);
   }
 

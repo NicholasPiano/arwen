@@ -11,7 +11,7 @@ const instanceSetSelector = createSelector(
     ({ instances: instanceIds = [] }) => instanceIds.map(
       id => new Instance(instances[id]),
     ),
-    ({ lock }) => lock,
+    ({ id, lock }) => `${id}${lock}`,
   ),
 );
 

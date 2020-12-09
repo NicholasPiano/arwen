@@ -34,7 +34,7 @@ class RestSocket extends BaseSocket {
 
   // eslint-disable-next-line class-methods-use-this
   async send(data) {
-    const { method, body } = data;
+    const { method, body, headers } = data;
     const { endpoint, method: httpMethod } = method;
     const getURL = () => `${this.api.constructor.url}${endpoint}`;
     const getMethod = () => {
@@ -54,11 +54,12 @@ class RestSocket extends BaseSocket {
     const getHeaders = () => {
       if (body) {
         return {
+          ...headers,
           'Content-Type': 'application/json',
         };
       }
 
-      return undefined;
+      return headers;
     };
 
     const result = await fetch(
