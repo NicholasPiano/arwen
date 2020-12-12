@@ -11,6 +11,7 @@ function* querySaga({ parameters, model }) {
     parameters,
     model,
   );
+
   const initialResolution = (yield select(resolutionSelectors.resolutionSelector))(queryId);
   const register = isRegisterable(query, initialResolution);
 

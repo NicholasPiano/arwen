@@ -1,5 +1,5 @@
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
@@ -27,6 +27,11 @@ class Manager {
   // eslint-disable-next-line class-methods-use-this
   useState(initial) {
     return useState(initial);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  useMemo(fn, deps) {
+    return useMemo(fn, deps);
   }
 
   useQuery({ blocked = false, ...parameters }) {

@@ -17,7 +17,12 @@ import {
   localStorageAPI,
   LocalStorage,
 } from './localstorage';
-import { Model, Manager } from './model';
+import {
+  Model,
+  Manager,
+  sagas as modelSagas,
+} from './model';
+import { sagas as querySagas } from './query';
 import { reducer, hooks } from './utilities';
 
 export {
@@ -37,6 +42,8 @@ export {
   apiSagas,
   Model,
   Manager,
+  modelSagas,
+  querySagas,
   reducer,
   hooks,
 };

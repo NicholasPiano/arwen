@@ -16,6 +16,12 @@ class LocalStorageManager extends Manager {
     return { ...attributes, ...rest };
   }
 
+  useSet(data) {
+    const blocked = !data;
+
+    return this.useQuery({ method: methods.SET, data, blocked });
+  }
+
 }
 
 export default LocalStorageManager;

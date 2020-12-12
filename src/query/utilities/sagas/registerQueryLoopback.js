@@ -39,7 +39,7 @@ function* registerQueryLoopback(api, { query, filter, blockOutgoing, ...rest }) 
     },
   };
 
-  yield call(updateQuery, api, action);
+  yield call(updateQuery, action);
 
   return false;
 }

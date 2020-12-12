@@ -46,6 +46,18 @@ class LocalStorageSocket extends BaseSocket {
         return this.onmessage(data);
       }
 
+      case methods.SET: {
+        const { data: localStorageData, ...queryParameters } = rest;
+
+        Object.keys(localStorageData).forEach(key => {
+          const value = localStorageData[key];
+
+          localStorage.setItem(key, value);
+        });
+
+        return this.send({ method: methods.GET, ...queryParameters });
+      }
+
       default:
         return null;
     }
