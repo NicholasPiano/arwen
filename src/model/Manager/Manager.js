@@ -6,8 +6,12 @@ import isEmpty from 'lodash/isEmpty';
 import { actions } from '../../query';
 import { selectors as resolutionSelectors } from '../../resolution';
 import { selectors as instanceSelectors } from '../../instance';
-import { selectors as modelSelectors } from '../utilities';
-import { createManagerQuery, generateSort, isRegisterable } from './utilities';
+import {
+  selectors as modelSelectors,
+  createManagerQuery,
+  generateSort,
+  isRegisterable,
+} from '../utilities';
 
 class Manager {
 
@@ -58,7 +62,7 @@ class Manager {
       }
     }, [blocked]);
 
-    return this.model.resolve({ resolution, onQuery, blocked });
+    return this.model.resolve({ resolution, onQuery, blocked, queryBlocked });
   }
 
   useFilter({ sort: sortFunction, page, size, ...filter }) {

@@ -1,5 +1,6 @@
 
 import { BaseSocket } from '../../../API/utilities';
+import { methods, LOCAL_STORAGE_ID } from '../../constants';
 
 class LocalStorageSocket extends BaseSocket {
 
@@ -21,8 +22,8 @@ class LocalStorageSocket extends BaseSocket {
 
   async send({ method, ...rest }) {
     switch (method) {
-      case 'get': {
-        const id = 'local-storage';
+      case methods.GET: {
+        const id = LOCAL_STORAGE_ID;
         const attributes = Object.keys(localStorage).reduce((acc, key) => {
           const item = localStorage.getItem(key);
 
@@ -36,13 +37,13 @@ class LocalStorageSocket extends BaseSocket {
           instance: [
             {
               id,
-              ...attributes,
+              attributes,
             },
           ],
           splice: [{ ids: [id] }],
         };
 
-        return this.onmessage({ data });
+        return this.onmessage(data);
       }
 
       default:

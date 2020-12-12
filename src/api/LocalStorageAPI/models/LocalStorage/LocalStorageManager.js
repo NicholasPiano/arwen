@@ -1,20 +1,19 @@
 
 import { Manager } from '../../../../model';
+import { methods } from '../../constants';
 
 class LocalStorageManager extends Manager {
 
   useGet() {
-    const method = 'get';
-
-    const { instances } = this.useQuery({ method });
+    const { instances, ...rest } = this.useQuery({ method: methods.GET });
 
     if (!instances) {
-      return {};
+      return rest;
     }
 
-    const [instance] = instances;
+    const { attributes } = instances[0];
 
-    return instance.attributes;
+    return { ...attributes, ...rest };
   }
 
 }

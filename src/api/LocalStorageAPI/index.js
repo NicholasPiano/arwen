@@ -1,11 +1,11 @@
 
 import LocalStorageAPI from './LocalStorageAPI';
-
-const localStorageAPI = new LocalStorageAPI();
-
-const { LocalStorage } = localStorageAPI.exportModels();
+import { LocalStorageMessage, LocalStorageSocket } from './utilities';
+import { methods } from './constants';
 
 export {
-  LocalStorage,
-  localStorageAPI,
+  LocalStorageAPI,
+  LocalStorageMessage,
+  LocalStorageSocket,
+  methods,
 };

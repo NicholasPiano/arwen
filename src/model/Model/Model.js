@@ -19,9 +19,10 @@ class Model {
     return createModelId(this);
   }
 
-  static resolve({ resolution, onQuery, blocked }) {
+  static resolve({ resolution, onQuery, blocked, queryBlocked }) {
     const common = {
       loading: !resolution && !blocked,
+      exists: !queryBlocked,
       onQuery,
     };
 
@@ -46,6 +47,10 @@ class Model {
 
   static generateId(data) {
     return forge.md.sha256.create().update(data).digest().toHex();
+  }
+
+  static shouldSend() {
+    return true;
   }
 
   static receive({ ...parameters }) {

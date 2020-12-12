@@ -44,6 +44,15 @@ class API {
     this.socket = new BaseSocket(this.url);
   }
 
+  shouldSend({ model, ...rest }) {
+    const modelClass = this.constructor.models[model];
+    if (!modelClass.shouldSend(rest)) {
+      return false;
+    }
+
+    return true;
+  }
+
   send(data) {
     return this.socket.send(data);
   }

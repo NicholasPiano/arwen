@@ -1,5 +1,5 @@
 
-import { createQueryId } from '../../../query';
+import { createQueryId } from '../../query';
 
 const createManagerQuery = (parameters, model) => {
   const parametersWithModelAndAPI = {

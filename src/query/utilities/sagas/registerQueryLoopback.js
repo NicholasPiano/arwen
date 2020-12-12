@@ -4,7 +4,15 @@ import { select, call } from 'redux-saga/effects';
 import { selectors as instanceSelectors } from '../../../instance';
 import updateQuery from './updateQuery';
 
-function* registerQueryLoopback(api, { query, filter }) {
+function* registerQueryLoopback(api, { query, filter, blockOutgoing, ...rest }) {
+  if (blockOutgoing) {
+    return false;
+  }
+
+  if (!api.shouldSend({ query, filter, ...rest })) {
+    return false;
+  }
+
   if (!filter) {
     return true;
   }
