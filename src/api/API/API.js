@@ -61,8 +61,9 @@ class API {
     return this.send(data);
   }
 
-  unregister(data) {
-    return this.send(data);
+  // eslint-disable-next-line class-methods-use-this
+  unregister() {
+
   }
 
   createMessage(data) {

@@ -19,8 +19,9 @@ class Model {
     return createModelId(this);
   }
 
-  static resolve({ resolution, onQuery, blocked, queryBlocked }) {
+  static resolve({ query, resolution, onQuery, blocked, queryBlocked }) {
     const common = {
+      query,
       loading: !resolution && !blocked,
       exists: !queryBlocked,
       onQuery,
