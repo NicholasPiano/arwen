@@ -4,7 +4,7 @@ import { createSelector } from 'reselect';
 import selectors from '../../../utilities/selectors';
 
 const modelsSelector = createSelector(
-  selectors.dataSelector,
+  selectors.arwenSelector,
   data => data.model,
 );
 

@@ -1,10 +1,17 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import { actions } from '../../query';
-import { selectors } from '../../resolution';
-import { createManagerQuery, generateSort, isRegisterable } from './utilities';
+import { selectors as resolutionSelectors } from '../../resolution';
+import { selectors as instanceSelectors } from '../../instance';
+import {
+  selectors as modelSelectors,
+  createManagerQuery,
+  generateSort,
+  isRegisterable,
+} from '../utilities';
 
 class Manager {
 
@@ -12,21 +19,37 @@ class Manager {
     this.model = model;
   }
 
-  useQuery(parameters, blocked = false) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+  // eslint-disable-next-line class-methods-use-this
+  useCallback(fn, deps) {
+    return useCallback(fn, deps);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  useState(initial) {
+    return useState(initial);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  useMemo(fn, deps) {
+    return useMemo(fn, deps);
+  }
+
+  useQuery({ blocked = false, ...parameters }) {
+    const [queryParameters, setQueryParameters] = useState(parameters);
+    const [queryBlocked, setQueryBlocked] = useState(blocked);
     const dispatch = useDispatch();
     const { query, queryId } = createManagerQuery(
-      parameters,
+      queryParameters,
       this.model,
-      blocked,
+      queryBlocked,
     );
+    const resolution = useSelector(resolutionSelectors.resolutionSelector)(queryId);
+    const register = isRegisterable(query, resolution, queryBlocked);
+    const onQuery = deferredParameters => {
+      setQueryBlocked(false);
+      setQueryParameters({ ...queryParameters, ...deferredParameters });
+    };
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const selector = useSelector(selectors.resolutionSelector);
-    const resolution = selector(queryId);
-    const register = isRegisterable(query, resolution);
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (register) {
         dispatch(actions.registerQuery(query));
@@ -36,15 +59,15 @@ class Manager {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [queryId]);
 
-    const dispatchQuery = instanceQuery => {
-      dispatch(actions.registerQuery(instanceQuery));
+    useEffect(() => {
+      setQueryBlocked(blocked);
 
-      return {
-        cancel: () => dispatch(actions.unregisterQuery(instanceQuery)),
-      };
-    };
+      if (!blocked) {
+        setQueryParameters(parameters);
+      }
+    }, [blocked]);
 
-    return this.model.resolve(resolution, dispatchQuery);
+    return this.model.resolve({ query: queryId, resolution, onQuery, blocked, queryBlocked });
   }
 
   useFilter({ sort: sortFunction, page, size, ...filter }) {
@@ -61,6 +84,18 @@ class Manager {
     }
 
     return instances[0];
+  }
+
+  useLocalFirst() {
+    const model = useSelector(modelSelectors.modelSelector)(this.model.id);
+    const instances = useSelector(instanceSelectors.instanceSetSelector)(model);
+
+    if (isEmpty(instances)) {
+      return {};
+    }
+
+    // eslint-disable-next-line new-cap
+    return new this.model(instances[0]);
   }
 
 }

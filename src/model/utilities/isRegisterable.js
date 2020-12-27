@@ -1,5 +1,9 @@
 
-const isRegisterable = (query, resolution) => {
+const isRegisterable = (query, resolution, blocked = false) => {
+  if (blocked) {
+    return false;
+  }
+
   if (!query) {
     return false;
   }

@@ -1,14 +1,12 @@
 
-import { select, all, take, actionChannel, call } from 'redux-saga/effects';
+import { fork, take, actionChannel, call } from 'redux-saga/effects';
 
 import { actionTypes } from '../../constants';
-import selectors from '../selectors';
+import registerExistingQueries from './registerExistingQueries';
 import registerQuery from './registerQuery';
 
 function* registerQueries(api) {
-  const existingQueries = (yield select(selectors.apiQueriesSelector))(api.id);
-
-  yield all(existingQueries.map(query => call(registerQuery, api, query.action)));
+  yield fork(registerExistingQueries, api);
 
   const registerQueryAction = action => (
     action.type === actionTypes.REGISTER_QUERY

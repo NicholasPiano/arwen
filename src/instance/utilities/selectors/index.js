@@ -1,8 +1,8 @@
 
-import resolutionInstancesSelector from './resolutionInstancesSelector';
+import instanceSetSelector from './instanceSetSelector';
 import instanceSelector from './instanceSelector';
 
 export default {
-  resolutionInstancesSelector,
+  instanceSetSelector,
   instanceSelector,
 };

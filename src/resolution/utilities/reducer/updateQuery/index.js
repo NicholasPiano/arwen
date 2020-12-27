@@ -10,7 +10,7 @@ const updateQuery = (state, action) => {
     splice,
     ...rest
   } = action.payload;
-  const { query, model, error } = rest;
+  const { query, model, error, data } = rest;
   const { [query]: existingResolution = {} } = state;
 
   if (register) {
@@ -19,8 +19,12 @@ const updateQuery = (state, action) => {
 
   const { attributes = {} } = existingResolution;
   const { lock = 0 } = attributes;
-
-  return {
+  const { instances, ...changes } = calculateResolutionInstances({
+    resolution: existingResolution,
+    digest,
+    splice,
+  });
+  const resolution = {
     ...state,
     [query]: {
       id: query,
@@ -28,17 +32,19 @@ const updateQuery = (state, action) => {
         ...attributes,
         lock,
         error,
+        data,
       },
       relationships: {
         api,
         model,
-        instances: calculateResolutionInstances({
-          resolution: existingResolution,
-          digest,
-          splice,
-        }),
+        instances,
       },
     },
+  };
+
+  return {
+    resolution,
+    ...changes,
   };
 };
 

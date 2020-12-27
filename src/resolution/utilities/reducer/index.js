@@ -5,13 +5,16 @@ import resolutionReducer from './resolutionReducer';
 import reduceResolutionsToUpdate from './reduceResolutionsToUpdate';
 
 const reducer = (state = {}, action, resolutionsToUpdate) => {
-  const newState = resolutionReducer(state, action);
+  const { resolution, ...rest } = resolutionReducer(state, action);
 
   if (isEmpty(resolutionsToUpdate)) {
-    return newState;
+    return { resolution, ...rest };
   }
 
-  return resolutionsToUpdate.reduce(reduceResolutionsToUpdate, newState);
+  return {
+    resolution: resolutionsToUpdate.reduce(reduceResolutionsToUpdate, resolution),
+    ...rest,
+  };
 };
 
 export default reducer;

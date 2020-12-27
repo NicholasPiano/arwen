@@ -5,11 +5,10 @@ import createModelId from '../utilities/createModelId';
 
 class Model {
 
-  constructor(instance, dispatchQuery) {
+  constructor(instance) {
     this.id = instance.id;
     this.attributes = instance.attributes;
     this.relationships = instance.relationships;
-    this.dispatchQuery = dispatchQuery;
   }
 
   static get id() {
@@ -20,24 +19,39 @@ class Model {
     return createModelId(this);
   }
 
-  static resolve(resolution, dispatchQuery) {
+  static resolve({ query, resolution, onQuery, blocked, queryBlocked }) {
+    const common = {
+      query,
+      loading: !resolution && !blocked,
+      exists: !queryBlocked,
+      onQuery,
+    };
+
     if (!resolution) {
-      return {};
+      return common;
     }
 
-    const { modelInstances, error } = resolution;
+    const { modelInstances, error, data } = resolution;
 
     if (error) {
-      return { error };
+      return { error, ...common };
     }
 
-    const instances = modelInstances.map(instance => new this(instance, dispatchQuery));
+    if (data) {
+      return { data, ...common };
+    }
 
-    return { instances };
+    const instances = modelInstances.map(instance => new this(instance));
+
+    return { instances, ...common };
   }
 
   static generateId(data) {
     return forge.md.sha256.create().update(data).digest().toHex();
+  }
+
+  static shouldSend() {
+    return true;
   }
 
   static receive({ ...parameters }) {
@@ -46,6 +60,16 @@ class Model {
 
   get name() {
     return this.attributes.name;
+  }
+
+  get instances() {
+    const { instances } = this.relationships;
+
+    if (!instances) {
+      return [];
+    }
+
+    return [...instances];
   }
 
 }

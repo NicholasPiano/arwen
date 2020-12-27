@@ -1,13 +1,27 @@
 
 import API from './API/API';
-import RestAPI from './RestAPI/RestAPI';
+import {
+  LocalStorageAPI,
+  LocalStorageMessage,
+  LocalStorageSocket,
+  methods as localStorageMethods,
+} from './LocalStorageAPI';
+import { RestAPI, RestSocket, RestMessage } from './RestAPI';
 import { sagas, reducer } from './utilities';
-import WebsocketAPI from './WebsocketAPI/WebsocketAPI';
+import { WebsocketAPI, WebsocketManager, WebsocketMessage } from './WebsocketAPI';
 
 export {
   API,
+  LocalStorageAPI,
+  LocalStorageMessage,
+  LocalStorageSocket,
+  localStorageMethods,
   RestAPI,
+  RestSocket,
+  RestMessage,
   sagas,
   reducer,
   WebsocketAPI,
+  WebsocketManager,
+  WebsocketMessage,
 };

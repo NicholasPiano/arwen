@@ -9,7 +9,7 @@ function* updateQueries(api) {
   while (true) {
     const action = yield take(queryUpdateChannel);
 
-    yield call(updateQuery, api, action);
+    yield call(updateQuery, action);
   }
 }
 

@@ -9,10 +9,8 @@ function* registerQuery(api, action) {
   const shouldSend = yield call(registerQueryLoopback, api, { query, ...rest });
 
   if (shouldSend) {
-    return api.send({ query, ...rest });
+    yield api.register({ query, ...rest });
   }
-
-  return undefined;
 }
 
 export default registerQuery;

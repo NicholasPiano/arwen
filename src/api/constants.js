@@ -1,9 +1,11 @@
 
 export const actionTypes = {
-  OPEN: Symbol('websocketOpen'),
-  CLOSE: Symbol('websocketClose'),
-  ERROR: Symbol('websocketError'),
-  RECEIVE: Symbol('websocketReceive'),
+  START: Symbol('apiStart'),
+  OPEN: Symbol('apiOpen'),
+  CLOSE: Symbol('apiClose'),
+  ERROR: Symbol('apiError'),
+  RECEIVE: Symbol('apiReceive'),
+  STOP: Symbol('apiStop'),
 };
 
 export default actionTypes;

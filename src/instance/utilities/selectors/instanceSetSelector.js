@@ -5,14 +5,14 @@ import { createSelector } from 'reselect';
 import Instance from '../../Instance/Instance';
 import instancesSelector from './instancesSelector';
 
-const resolutionInstancesSelector = createSelector(
+const instanceSetSelector = createSelector(
   instancesSelector,
   instances => memoize(
     ({ instances: instanceIds = [] }) => instanceIds.map(
       id => new Instance(instances[id]),
     ),
-    ({ lock }) => lock,
+    ({ id, lock }) => `${id}${lock}`,
   ),
 );
 
-export default resolutionInstancesSelector;
+export default instanceSetSelector;
